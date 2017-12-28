@@ -8,14 +8,20 @@
 
 #import "CFPlayerController.h"
 #import "CFCDView.h"
+#import <FSAudioStream.h>
+
+//少司命 - 客官请进
+#define MUSIC1 @"http://music.163.com/song/media/outer/url?id=444444053.mp3"
+//Mike Zhou - The Dawn
+#define MUSIC2 @"http://music.163.com/song/media/outer/url?id=476592630.mp3"
+//Matteo - Panama
+#define MUSIC3 @"http://music.163.com/song/media/outer/url?id=34229976.mp3"
 
 @interface CFPlayerController ()
 
 @property (nonatomic, strong) CFCDView *cdView;
-
-@property (nonatomic, strong) UIImageView *imageView1;
-@property (nonatomic, strong) UIImageView *imageView2;
-@property (nonatomic, strong) UIImageView *imageView3;
+// 对象
+@property (nonatomic, strong) FSAudioStream *audioStream;
 
 @end
 
@@ -32,6 +38,20 @@
         });
         
         return _instance;
+    }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    self.title = _model.songName;
+    
+    if (![CFUSER.currentSong.songId isEqualToString:_model.songId]) {
+        CFUSER.currentSong = _model;
+        CFUSER.currentIndex = _songAtindex;
+        [self.cdView reloadNew];
+        [self buildStreamer];
     }
     
 }
@@ -54,71 +74,125 @@
     weakSELF;
     
     //实例化
-    self.cdView = [[CFCDView alloc]initWithFrame:CGRectMake(0,64 + 80, ScreenWidth,ROTATION_WIDTH + 40)];
+    self.cdView = [[CFCDView alloc] initWithFrame:CGRectMake(0,64 + 30, ScreenWidth,ROTATION_WIDTH + 80)];
+    self.cdView.backgroundColor = [UIColor clearColor];
     self.cdView.isPlayer = ^(BOOL is){
         
         if (is) {
-            
-            [weakSelf startWithAnimation];
+            [weakSelf.audioStream pause];
+            NSLog(@"play");
         }
         else
         {
-            [weakSelf pauseWithAnimation];
+            [weakSelf.audioStream pause];
+            NSLog(@"pause");
         }
         
     };
-    self.cdView.scrollViewWillBeginDragging = ^{
-        [weakSelf pauseWithAnimation];
-    };
-    self.cdView.scrollViewDidEndDecelerating = ^(UIScrollView *scrollView) {
-        //确保begin方法执行完
-        [weakSelf performSelector:@selector(startWithAnimation) withObject:nil afterDelay:0.2];
+    self.cdView.scrollViewDidEndDecelerating = ^(UIScrollView *scrollView,BOOL isScrollRight) {
+
+        if (isScrollRight) {
+            [weakSelf next];
+        }
+        else
+        {
+            [weakSelf prev];
+        }
     };
     [self.view addSubview:self.cdView];
     
-    _imageView1 = [[UIImageView alloc] initWithFrame:CGRectMake(self.view.width/2+100,64 + 60, 70, 70)];
-    _imageView1.image = [UIImage imageNamed:@"changzhen_2"];
-    [self.view addSubview:_imageView1];
+    UIButton *prevButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    prevButton.frame = CGRectMake(ScreenWidth/2 - 40 - 50, CGRectGetMaxY(self.cdView.frame) + 80, 40, 40);
+    prevButton.tintColor = [UIColor grayColor];
+    [prevButton setImage:[UIImage imageNamed:@"prev"] forState:(UIControlStateNormal)];
+    [prevButton cf_addEventHandler:^(UIButton *btn) {
+        
+        [weakSelf.cdView scrollLeftWithPrev];
+        
+    } forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:prevButton];
     
-    //中间的唱针
-    _imageView2 = [[UIImageView alloc] initWithFrame:CGRectMake(_imageView1.x - 10,64 - 30, 264*0.5, 485*0.5)];
-    _imageView2.image = [UIImage imageNamed:@"changzhen_1"];
-    _imageView2.layer.anchorPoint = CGPointMake(1, 0.15);//锚点重设会导致x,y坐标发生偏移
-    [self.view addSubview:_imageView2];
-    CGAffineTransform transform = CGAffineTransformMakeRotation(-0.15);
-    _imageView2.transform = transform;
-    
-    _imageView3 = [[UIImageView alloc] initWithFrame:CGRectMake(_imageView1.x+5,64 + 67, 60, 60)];
-    _imageView3.image = [UIImage imageNamed:@"changzhen_3"];
-    [self.view addSubview:_imageView3];
+    UIButton *nextButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
+    nextButton.frame = CGRectMake(ScreenWidth/2 + 50, CGRectGetMaxY(self.cdView.frame) + 80, 40, 40);
+    nextButton.tintColor = [UIColor grayColor];
+    [nextButton setImage:[UIImage imageNamed:@"next"] forState:(UIControlStateNormal)];
+    [nextButton cf_addEventHandler:^(UIButton *btn) {
+        
+        //下一首
+        [weakSelf.cdView scrollRightWIthNext];
+  
+    } forControlEvents:(UIControlEventTouchUpInside)];
+    [self.view addSubview:nextButton];
     
 }
 
-//唱针动画
-- (void)pauseWithAnimation {
-    
-    [UIView animateWithDuration:0.3 animations:^{
-        
-        CGAffineTransform transform = CGAffineTransformMakeRotation(-0.4);
-        _imageView2.transform = transform;
-        
-        } completion:^(BOOL finished) {
-        
-    }];
-     
-}
-
-- (void)startWithAnimation
+- (void)buildStreamer
 {
+    weakSELF;
+    // 网络文件
+    NSURL *url = [NSURL URLWithString:CFUSER.currentSong.url];
     
-    [UIView animateWithDuration:0.3 animations:^{
-        CGAffineTransform transform = CGAffineTransformMakeRotation(-0.15);
-        _imageView2.transform = transform;
-        } completion:^(BOOL finished) {
+    if (!_audioStream) {
+        // 创建FSAudioStream对象
+        _audioStream = [[FSAudioStream alloc] initWithUrl:url];
+        _audioStream.onFailure = ^(FSAudioStreamError error,NSString *description){
+            NSLog(@"播放过程中发生错误，错误信息：%@",description);
+            
+            [weakSelf showAlertMsg:description];
+            
+        };
+        _audioStream.onCompletion=^(){
+            
+            [weakSelf.cdView scrollRightWIthNext];
+        };
+        
+        // 设置声音
+        [_audioStream setVolume:1];
+        [_audioStream play];
+    }
+    else
+    {
+        _audioStream.url = url;
+        [_audioStream play];
+    }
+}
+
+- (void)next
+{
+    CFUSER.currentIndex++;
     
-    }];
+    [self.audioStream stop];
+    
+    CFStreamerModel *model =  _dataSource[ CFUSER.currentIndex > [_dataSource count]-1 ? 0 : CFUSER.currentIndex];
+    
+    if (CFUSER.currentIndex > [_dataSource count]-1) {
+        CFUSER.currentIndex = 0;
+    }
+    
+    CFUSER.currentSong = model;
+    self.title = model.songName;
+    [self buildStreamer];
     
 }
+
+- (void)prev
+{
+    CFUSER.currentIndex--;
+    
+    [self.audioStream stop];
+    
+    CFStreamerModel *model =  _dataSource[ CFUSER.currentIndex < 0 ? [_dataSource count]-1 : CFUSER.currentIndex];
+    
+    if (CFUSER.currentIndex < 0) {
+        CFUSER.currentIndex = [_dataSource count] - 1;
+    }
+    
+    CFUSER.currentSong = model;
+    self.title = model.songName;
+    [self buildStreamer];
+    
+}
+
 /*
 #pragma mark - Navigation
 

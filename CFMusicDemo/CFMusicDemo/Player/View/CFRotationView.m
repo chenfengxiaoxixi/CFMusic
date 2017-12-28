@@ -85,14 +85,10 @@
     _isPlay = aIsPlay;
     
     if (self.isPlay) {
-        [self addAnimation];
-        [self startRotation];
-        [self.btn setImage:_onImage forState:UIControlStateNormal];
+        [self start];
         
     }else{
-        self.layer.speed = 0;
-        [self.layer removeAllAnimations];
-        [self.btn setImage:_offImage forState:UIControlStateNormal];
+        [self stop];
         
     }
 }
@@ -116,14 +112,18 @@
     
 }
 
-- (void)play
+- (void)start
 {
-    self.isPlay = YES;
+    [self addAnimation];
+    [self startRotation];
+    [self.btn setImage:_onImage forState:UIControlStateNormal];
 }
 
-- (void)pause
+- (void)stop
 {
-    self.isPlay = NO;
+    self.layer.speed = 0;
+    [self.layer removeAllAnimations];
+    [self.btn setImage:_offImage forState:UIControlStateNormal];
 }
 
 @end

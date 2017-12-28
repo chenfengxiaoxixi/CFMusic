@@ -18,10 +18,4 @@
 
 @property (nonatomic,strong) void(^playBlock)(BOOL isPlay);
 
-- (void)addAnimation;
-
--(void)play;
-
--(void)pause;
-
 @end

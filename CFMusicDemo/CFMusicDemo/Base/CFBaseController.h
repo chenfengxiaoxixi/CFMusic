@@ -18,4 +18,6 @@
 - (void)showRightButtonItemWithTitle:(NSString *)title Sel:(SEL)sel;
 - (void)showRightButtonItemWithImage:(NSString *)imageName Sel:(SEL)sel;
 
+- (void)showAlertMsg:(NSString *)msg;
+
 @end

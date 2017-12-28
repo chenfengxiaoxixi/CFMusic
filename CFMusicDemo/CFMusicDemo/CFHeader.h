@@ -6,13 +6,14 @@
 //  Copyright © 2017年 chenfeng. All rights reserved.
 //
 
-#ifndef CFHeader_h
-#define CFHeader_h
 
+#import "CFUser.h"
 
-#endif /* CFHeader_h */
+#define CFUSER [CFUser shareInstance]
 
 #define ROTATION_WIDTH 300
+
+#define CELL_HEIGHT 50
 
 #define weakSELF typeof(self) __weak weakSelf = self;
 

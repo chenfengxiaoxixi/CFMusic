@@ -7,19 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CFRotationView.h"
 
-
-@interface CFCDView : UIScrollView<UIScrollViewDelegate>
+@interface CFCDView : UIView<UIScrollViewDelegate>
 
 @property(nonatomic,strong) UIImageView *CDImageView;
+@property (nonatomic, strong) CFRotationView *center_rotationView;
 
-@property(nonatomic,strong) void(^scrollViewDidEndDecelerating)(UIScrollView *scrollView);
-
-@property(nonatomic,strong) void(^scrollViewWillBeginDragging)(void);
+@property(nonatomic,strong) void(^scrollViewDidEndDecelerating)(UIScrollView *scrollView, BOOL isScrollRight);
 
 @property(nonatomic,strong) void(^isPlayer)(BOOL is);
 
-- (void)next;
-- (void)stopAnimation;
+- (void)scrollRightWIthNext;
+- (void)scrollLeftWithPrev;
+- (void)reloadNew;
 
 @end

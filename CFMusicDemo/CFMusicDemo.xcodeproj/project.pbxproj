@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		085E05FDF0FB5CCA0D73F3F2 /* libPods-CFMusicDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0E66B120C230BC095B70CB /* libPods-CFMusicDemo.a */; };
 		A2A2E1421FEE385400CCFF93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1411FEE385400CCFF93 /* AppDelegate.m */; };
 		A2A2E1451FEE385400CCFF93 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1441FEE385400CCFF93 /* ViewController.m */; };
 		A2A2E1481FEE385400CCFF93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2A2E1461FEE385400CCFF93 /* Main.storyboard */; };
@@ -20,6 +21,9 @@
 		A2A2E17E1FEE5CF400CCFF93 /* CFPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E17D1FEE5CF400CCFF93 /* CFPlayerController.m */; };
 		A2A2E1831FEE734100CCFF93 /* CFCDView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1821FEE734100CCFF93 /* CFCDView.m */; };
 		A2A2E1861FEE74C800CCFF93 /* CFRotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1851FEE74C800CCFF93 /* CFRotationView.m */; };
+		A2DEB01C1FF27D8C00946FF9 /* CFStreamerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DEB01B1FF27D8C00946FF9 /* CFStreamerModel.m */; };
+		A2DEB0201FF4F4DD00946FF9 /* CFUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DEB01F1FF4F4DD00946FF9 /* CFUser.m */; };
+		A2DEB0251FF5137A00946FF9 /* UIButton+BlockUI.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DEB0241FF5137A00946FF9 /* UIButton+BlockUI.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		356ED1AB760E59682EC9774F /* Pods-CFMusicDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CFMusicDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		55A3A83A9E38D1388A5E8100 /* Pods-CFMusicDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CFMusicDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo.release.xcconfig"; sourceTree = "<group>"; };
 		A2A2E13D1FEE385400CCFF93 /* CFMusicDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFMusicDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A2E1401FEE385400CCFF93 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A2A2E1411FEE385400CCFF93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -68,6 +74,13 @@
 		A2A2E1841FEE74C800CCFF93 /* CFRotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFRotationView.h; sourceTree = "<group>"; };
 		A2A2E1851FEE74C800CCFF93 /* CFRotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFRotationView.m; sourceTree = "<group>"; };
 		A2A2E1871FEE764900CCFF93 /* CFHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFHeader.h; sourceTree = "<group>"; };
+		A2DEB01A1FF27D8C00946FF9 /* CFStreamerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFStreamerModel.h; sourceTree = "<group>"; };
+		A2DEB01B1FF27D8C00946FF9 /* CFStreamerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFStreamerModel.m; sourceTree = "<group>"; };
+		A2DEB01E1FF4F4DD00946FF9 /* CFUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFUser.h; sourceTree = "<group>"; };
+		A2DEB01F1FF4F4DD00946FF9 /* CFUser.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFUser.m; sourceTree = "<group>"; };
+		A2DEB0231FF5137A00946FF9 /* UIButton+BlockUI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+BlockUI.h"; sourceTree = "<group>"; };
+		A2DEB0241FF5137A00946FF9 /* UIButton+BlockUI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+BlockUI.m"; sourceTree = "<group>"; };
+		CB0E66B120C230BC095B70CB /* libPods-CFMusicDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CFMusicDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				085E05FDF0FB5CCA0D73F3F2 /* libPods-CFMusicDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,6 +109,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		94F5E6C5E9AF959C39682D36 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CB0E66B120C230BC095B70CB /* libPods-CFMusicDemo.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		A2A2E1341FEE385400CCFF93 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +124,8 @@
 				A2A2E1581FEE385400CCFF93 /* CFMusicDemoTests */,
 				A2A2E1631FEE385400CCFF93 /* CFMusicDemoUITests */,
 				A2A2E13E1FEE385400CCFF93 /* Products */,
+				BB81C6DC50C04BB83497D494 /* Pods */,
+				94F5E6C5E9AF959C39682D36 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -118,20 +142,22 @@
 		A2A2E13F1FEE385400CCFF93 /* CFMusicDemo */ = {
 			isa = PBXGroup;
 			children = (
+				A2DEB01D1FF4F44800946FF9 /* User */,
 				A2A2E1721FEE58B700CCFF93 /* Category */,
 				A2A2E1781FEE5C3C00CCFF93 /* Base */,
+				A2DEB0191FF27D3800946FF9 /* Model */,
 				A2A2E1761FEE5B0D00CCFF93 /* Player */,
 				A2A2E1401FEE385400CCFF93 /* AppDelegate.h */,
 				A2A2E1411FEE385400CCFF93 /* AppDelegate.m */,
 				A2A2E1431FEE385400CCFF93 /* ViewController.h */,
 				A2A2E1441FEE385400CCFF93 /* ViewController.m */,
+				A2A2E1871FEE764900CCFF93 /* CFHeader.h */,
+				A2A2E17F1FEE6A3C00CCFF93 /* PrefixHeader.pch */,
 				A2A2E1461FEE385400CCFF93 /* Main.storyboard */,
 				A2A2E1491FEE385400CCFF93 /* Assets.xcassets */,
 				A2A2E14B1FEE385400CCFF93 /* LaunchScreen.storyboard */,
 				A2A2E14E1FEE385400CCFF93 /* Info.plist */,
 				A2A2E14F1FEE385400CCFF93 /* main.m */,
-				A2A2E1871FEE764900CCFF93 /* CFHeader.h */,
-				A2A2E17F1FEE6A3C00CCFF93 /* PrefixHeader.pch */,
 			);
 			path = CFMusicDemo;
 			sourceTree = "<group>";
@@ -157,6 +183,8 @@
 		A2A2E1721FEE58B700CCFF93 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				A2DEB0231FF5137A00946FF9 /* UIButton+BlockUI.h */,
+				A2DEB0241FF5137A00946FF9 /* UIButton+BlockUI.m */,
 				A2A2E1731FEE58B700CCFF93 /* UIView+Frame.m */,
 				A2A2E1741FEE58B700CCFF93 /* UIView+Frame.h */,
 			);
@@ -201,6 +229,33 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		A2DEB0191FF27D3800946FF9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A2DEB01A1FF27D8C00946FF9 /* CFStreamerModel.h */,
+				A2DEB01B1FF27D8C00946FF9 /* CFStreamerModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A2DEB01D1FF4F44800946FF9 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				A2DEB01E1FF4F4DD00946FF9 /* CFUser.h */,
+				A2DEB01F1FF4F4DD00946FF9 /* CFUser.m */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		BB81C6DC50C04BB83497D494 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				356ED1AB760E59682EC9774F /* Pods-CFMusicDemo.debug.xcconfig */,
+				55A3A83A9E38D1388A5E8100 /* Pods-CFMusicDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -208,9 +263,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = A2A2E1691FEE385400CCFF93 /* Build configuration list for PBXNativeTarget "CFMusicDemo" */;
 			buildPhases = (
+				6035067E1AE1F7FFD39528BB /* [CP] Check Pods Manifest.lock */,
 				A2A2E1391FEE385400CCFF93 /* Sources */,
 				A2A2E13A1FEE385400CCFF93 /* Frameworks */,
 				A2A2E13B1FEE385400CCFF93 /* Resources */,
+				F0EA39F21C0396CE659BF2CF /* [CP] Embed Pods Frameworks */,
+				FCB30D8A5355738E33759F41 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -329,6 +387,57 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		6035067E1AE1F7FFD39528BB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CFMusicDemo-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0EA39F21C0396CE659BF2CF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FCB30D8A5355738E33759F41 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		A2A2E1391FEE385400CCFF93 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -340,8 +449,11 @@
 				A2A2E1501FEE385400CCFF93 /* main.m in Sources */,
 				A2A2E1421FEE385400CCFF93 /* AppDelegate.m in Sources */,
 				A2A2E1831FEE734100CCFF93 /* CFCDView.m in Sources */,
+				A2DEB0251FF5137A00946FF9 /* UIButton+BlockUI.m in Sources */,
 				A2A2E17E1FEE5CF400CCFF93 /* CFPlayerController.m in Sources */,
 				A2A2E1861FEE74C800CCFF93 /* CFRotationView.m in Sources */,
+				A2DEB01C1FF27D8C00946FF9 /* CFStreamerModel.m in Sources */,
+				A2DEB0201FF4F4DD00946FF9 /* CFUser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +614,7 @@
 		};
 		A2A2E16A1FEE385400CCFF93 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 356ED1AB760E59682EC9774F /* Pods-CFMusicDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -518,6 +631,7 @@
 		};
 		A2A2E16B1FEE385400CCFF93 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 55A3A83A9E38D1388A5E8100 /* Pods-CFMusicDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

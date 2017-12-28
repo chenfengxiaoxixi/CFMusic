@@ -22,6 +22,12 @@
     [self configUIAppearance];
 }
 
+- (void)configUIAppearance
+{
+    self.view.backgroundColor = [UIColor whiteColor];
+    
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -124,14 +130,14 @@
     [self.navigationItem.rightBarButtonItem setBackgroundImage:[UIImage imageNamed:highlightedImageName] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
 }
 
-#pragma mark - Theme
 
-- (void)configUIAppearance
+- (void)showAlertMsg:(NSString *)msg
 {
-    self.view.backgroundColor = [UIColor whiteColor];
-    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"提示" message:msg preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *sureAction = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleCancel handler:nil];
+    [alertController addAction:sureAction];
+    [self presentViewController:alertController animated:YES completion:nil];
 }
-
 /*
 #pragma mark - Navigation
 
