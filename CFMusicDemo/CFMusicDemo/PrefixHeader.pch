@@ -22,3 +22,4 @@
 //category
 #import "UIView+Frame.h"
 #import "UIButton+BlockUI.h"
+#import "UIImage+ImageHandle.h"

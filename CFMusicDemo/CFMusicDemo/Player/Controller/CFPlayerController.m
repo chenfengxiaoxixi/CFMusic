@@ -9,6 +9,8 @@
 #import "CFPlayerController.h"
 #import "CFCDView.h"
 #import <FSAudioStream.h>
+#import <MediaPlayer/MPMediaItem.h>
+#import <MediaPlayer/MPNowPlayingInfoCenter.h>
 
 //少司命 - 客官请进
 #define MUSIC1 @"http://music.163.com/song/media/outer/url?id=444444053.mp3"
@@ -51,7 +53,7 @@
         CFUSER.currentSong = _model;
         CFUSER.currentIndex = _songAtindex;
         [self.cdView reloadNew];
-        [self buildStreamer];
+        [self updateInfo];
     }
     
 }
@@ -60,6 +62,12 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    //开启后台处理多媒体事件
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    UIImageView *bg_imageView = [self bg_imageView];
+    [self.view addSubview:bg_imageView];
+    
     [self buildUserInterface];
     
 }
@@ -67,6 +75,17 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (UIImageView *)bg_imageView
+{
+    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight)];
+    
+    UIImage *image = [UIImage boxblurImage:[UIImage imageNamed:@"gb_imageView"] withBlurNumber:0.8];
+    
+    imageView.image = image;
+    
+    return imageView;
 }
 
 - (void)buildUserInterface
@@ -78,13 +97,13 @@
     self.cdView.backgroundColor = [UIColor clearColor];
     self.cdView.isPlayer = ^(BOOL is){
         
+        [weakSelf.audioStream pause];
+        
         if (is) {
-            [weakSelf.audioStream pause];
             NSLog(@"play");
         }
         else
         {
-            [weakSelf.audioStream pause];
             NSLog(@"pause");
         }
         
@@ -103,7 +122,7 @@
     
     UIButton *prevButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     prevButton.frame = CGRectMake(ScreenWidth/2 - 40 - 50, CGRectGetMaxY(self.cdView.frame) + 80, 40, 40);
-    prevButton.tintColor = [UIColor grayColor];
+    prevButton.tintColor = [UIColor darkGrayColor];
     [prevButton setImage:[UIImage imageNamed:@"prev"] forState:(UIControlStateNormal)];
     [prevButton cf_addEventHandler:^(UIButton *btn) {
         
@@ -114,7 +133,7 @@
     
     UIButton *nextButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     nextButton.frame = CGRectMake(ScreenWidth/2 + 50, CGRectGetMaxY(self.cdView.frame) + 80, 40, 40);
-    nextButton.tintColor = [UIColor grayColor];
+    nextButton.tintColor = [UIColor darkGrayColor];
     [nextButton setImage:[UIImage imageNamed:@"next"] forState:(UIControlStateNormal)];
     [nextButton cf_addEventHandler:^(UIButton *btn) {
         
@@ -133,6 +152,7 @@
     NSURL *url = [NSURL URLWithString:CFUSER.currentSong.url];
     
     if (!_audioStream) {
+        
         // 创建FSAudioStream对象
         _audioStream = [[FSAudioStream alloc] initWithUrl:url];
         _audioStream.onFailure = ^(FSAudioStreamError error,NSString *description){
@@ -143,7 +163,7 @@
         };
         _audioStream.onCompletion=^(){
             
-            [weakSelf.cdView scrollRightWIthNext];
+            [weakSelf autoPlayNext];
         };
         
         // 设置声音
@@ -170,9 +190,7 @@
     }
     
     CFUSER.currentSong = model;
-    self.title = model.songName;
-    [self buildStreamer];
-    
+    [self updateInfo];
 }
 
 - (void)prev
@@ -188,9 +206,95 @@
     }
     
     CFUSER.currentSong = model;
-    self.title = model.songName;
+    [self updateInfo];
+}
+
+- (void)updateInfo
+{
+    self.title = CFUSER.currentSong.songName;
     [self buildStreamer];
     
+    [self configNowPlayingInfoCenter];
+    _reloadInfo();
+    self.cdView.center_rotationView.CDimageView.image = IMAGE_WITH_NAME(CFUSER.currentSong.imageString);
+}
+
+#pragma mark - 锁屏控制，接受外部事件的处理
+
+- (void)remoteControlReceivedWithEvent: (UIEvent *) receivedEvent
+{
+    if (receivedEvent.type == UIEventTypeRemoteControl)
+    {
+        switch (receivedEvent.subtype)
+        {
+            case UIEventSubtypeRemoteControlTogglePlayPause:
+                        [self.audioStream stop];
+            break;
+            case UIEventSubtypeRemoteControlPreviousTrack:
+
+                        [self.cdView scrollLeftWithPrev];
+            break;
+            case UIEventSubtypeRemoteControlNextTrack:
+                        [self.cdView scrollRightWIthNext];
+            break;
+                
+            case UIEventSubtypeRemoteControlPlay:
+                        [self.cdView playOrPause];
+            break;
+                
+            case UIEventSubtypeRemoteControlPause:
+                        //暂停歌曲时，动画也要暂停
+                        [self.cdView playOrPause];
+            break;
+            
+            default:
+            break;
+        }
+    }
+}
+
+//锁屏显示信息
+- (void)configNowPlayingInfoCenter
+{
+    if (NSClassFromString(@"MPNowPlayingInfoCenter")) {
+        
+        NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
+        
+        [dict setObject:CFUSER.currentSong.songName forKey:MPMediaItemPropertyTitle];
+
+        
+        [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
+        
+    }
+}
+
+//后台播放控制
+-(void)autoPlayNext{
+    
+    //添加后台播放任务
+    UIBackgroundTaskIdentifier bgTask = 0;
+    if([UIApplication sharedApplication].applicationState== UIApplicationStateBackground) {
+        
+        NSLog(@"后台播放");
+        
+       UIApplication*app = [UIApplication sharedApplication];
+        
+        UIBackgroundTaskIdentifier newTask = [app beginBackgroundTaskWithExpirationHandler:nil];
+        
+        if(bgTask!= UIBackgroundTaskInvalid) {
+            
+            [app endBackgroundTask: bgTask];
+        }
+        
+        bgTask = newTask;
+        [self next];
+    }
+    else {
+        
+        NSLog(@"前台播放");
+        [self.cdView scrollRightWIthNext];
+        
+    }
 }
 
 /*

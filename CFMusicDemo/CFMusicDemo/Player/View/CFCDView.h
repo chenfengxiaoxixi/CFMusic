@@ -21,5 +21,6 @@
 - (void)scrollRightWIthNext;
 - (void)scrollLeftWithPrev;
 - (void)reloadNew;
+- (void)playOrPause;
 
 @end

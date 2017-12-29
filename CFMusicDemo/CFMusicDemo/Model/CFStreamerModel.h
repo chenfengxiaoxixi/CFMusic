@@ -13,6 +13,7 @@
 @property (nonatomic, strong) NSString *songName;
 @property (nonatomic, strong) NSString *url;
 @property (nonatomic, strong) NSString *songId;
+@property (nonatomic, strong) NSString *imageString;
 
 - (id)initWithDic:(NSDictionary *)dic;
 

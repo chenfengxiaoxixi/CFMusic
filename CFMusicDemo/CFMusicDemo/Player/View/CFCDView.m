@@ -68,6 +68,7 @@
     for (int i = 0; i < 3; i++) {
         
         CFRotationView *r_view = [[CFRotationView alloc] initWithFrame:CGRectMake((ScreenWidth-(ROTATION_WIDTH + 20))/2 + i * self.width, self.height/2 - (ROTATION_WIDTH + 20)/2, ROTATION_WIDTH + 20, ROTATION_WIDTH + 20)];
+        r_view.CDimageView.image = nil;
         r_view.playBlock = ^(BOOL is){
             weakSelf.isPlayer(is);
             if (is) {
@@ -163,6 +164,11 @@
     self.center_rotationView.isPlay = YES;
 }
 
+- (void)playOrPause
+{
+    [self.center_rotationView playOrPause];
+}
+
 - (void)reloadDiePian
 {
     int leftImageIndex,rightImageIndex;
@@ -174,7 +180,6 @@
         _isScrollRight = NO;
         _currentIndex=(_currentIndex+3-1)%3;
     }
-    _center_rotationView.CDimageView.image = IMAGE_WITH_NAME(@"cdImage");
     
     //重新设置左右碟片
     leftImageIndex=(_currentIndex+3-1)%3;

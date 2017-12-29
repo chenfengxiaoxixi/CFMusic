@@ -26,7 +26,7 @@
     if (self) {
         
         _CDimageView = [[UIImageView alloc] initWithFrame:CGRectMake(self.width/2 - 65, self.height/2 - 65, 130, 130)];
-        _CDimageView.image = IMAGE_WITH_NAME(@"cdImage");
+        //_CDimageView.image = IMAGE_WITH_NAME(@"cdImage");
         [self addSubview:_CDimageView];
         
         _ro = [[UIImageView alloc] initWithFrame:CGRectMake(10, 10, ROTATION_WIDTH, ROTATION_WIDTH)];
@@ -41,7 +41,7 @@
         self.btn.frame = CGRectMake(0,0,_onImage.size.width * 1.3, _onImage.size.height * 1.3);
         [self.btn setCenter:center];
         [self.btn setImage:_onImage forState:UIControlStateNormal];
-        [self.btn addTarget:self action:@selector(buttonProcessed:) forControlEvents:UIControlEventTouchUpInside];
+        [self.btn addTarget:self action:@selector(playOrPause) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.btn];
         
     }
@@ -62,7 +62,7 @@
     
 }
 
-- (void)buttonProcessed:(UIButton *)sender
+- (void)playOrPause
 {
     _isPlay = !_isPlay;
     

@@ -18,6 +18,7 @@
         self.songName = dic[@"songName"];
         self.url = dic[@"url"];
         self.songId = dic[@"id"];
+        self.imageString = dic[@"image"];
         
     }
     return self;

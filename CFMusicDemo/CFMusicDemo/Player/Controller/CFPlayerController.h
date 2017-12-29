@@ -16,6 +16,8 @@
 @property (nonatomic, strong) CFStreamerModel *model;
 @property (nonatomic, assign) NSInteger songAtindex;
 
+@property (nonatomic, strong) void (^reloadInfo)(void);
+
 + (instancetype)sharePlayerController;
 
 @end

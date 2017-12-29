@@ -18,4 +18,6 @@
 
 @property (nonatomic,strong) void(^playBlock)(BOOL isPlay);
 
+- (void)playOrPause;
+
 @end
