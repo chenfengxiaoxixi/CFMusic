@@ -10,7 +10,6 @@
 
 @interface CFRotationView ()
 
-
 @property (strong, nonatomic) UIImageView *ro;
 @property (strong, nonatomic) UIImage *onImage;
 @property (strong, nonatomic) UIImage *offImage;

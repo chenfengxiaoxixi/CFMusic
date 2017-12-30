@@ -27,7 +27,6 @@
     //根控制器
     ViewController *vc = [[ViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    //nav.navigationController.navigationBar.hidden = YES;
     self.window.rootViewController = nav;
     
     return YES;
@@ -71,5 +70,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)remoteControlReceivedWithEvent: (UIEvent *) receivedEvent
+{
+    [CF_NOTI_CENTER postNotificationName:@"remoteControl" object:nil userInfo:@{@"event":receivedEvent}];
+}
 
 @end

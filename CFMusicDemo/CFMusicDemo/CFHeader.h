@@ -17,6 +17,8 @@
 
 #define weakSELF typeof(self) __weak weakSelf = self;
 
+#define CF_NOTI_CENTER [NSNotificationCenter defaultCenter]
+
 #define IMAGE_WITH_NAME(name)   [UIImage imageNamed:[NSString stringWithFormat:@"%@",name]]
 
 #define IMAGE_WITH_BUNDLE(name)   [UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForAuxiliaryExecutable:[NSString stringWithFormat:@"%@",name]]]

@@ -69,6 +69,7 @@
         
         CFRotationView *r_view = [[CFRotationView alloc] initWithFrame:CGRectMake((ScreenWidth-(ROTATION_WIDTH + 20))/2 + i * self.width, self.height/2 - (ROTATION_WIDTH + 20)/2, ROTATION_WIDTH + 20, ROTATION_WIDTH + 20)];
         r_view.CDimageView.image = nil;
+        r_view.isPlay = NO;
         r_view.playBlock = ^(BOOL is){
             weakSelf.isPlayer(is);
             if (is) {
@@ -85,17 +86,14 @@
         if (i == 0) {
             
             _left_rotationView = r_view;
-            _left_rotationView.isPlay = NO;
         }
         else if (i == 1)
         {
             _center_rotationView = r_view;
-            _center_rotationView.isPlay = NO;
         }
         else if (i == 2)
         {
             _right_rotationView = r_view;
-            _right_rotationView.isPlay = NO;
         }
     }
 }
@@ -198,7 +196,7 @@
     }
     
     _index = _currentIndex;
-    //只有播放的碟片才开启动画,其余暂停
+    //只有播放的碟片才开启动画,其余移除动画
     _left_rotationView.isPlay = NO;
     _center_rotationView.isPlay = YES;
     _right_rotationView.isPlay = NO;

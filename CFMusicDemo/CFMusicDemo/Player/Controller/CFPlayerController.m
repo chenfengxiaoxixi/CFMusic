@@ -12,13 +12,6 @@
 #import <MediaPlayer/MPMediaItem.h>
 #import <MediaPlayer/MPNowPlayingInfoCenter.h>
 
-//少司命 - 客官请进
-#define MUSIC1 @"http://music.163.com/song/media/outer/url?id=444444053.mp3"
-//Mike Zhou - The Dawn
-#define MUSIC2 @"http://music.163.com/song/media/outer/url?id=476592630.mp3"
-//Matteo - Panama
-#define MUSIC3 @"http://music.163.com/song/media/outer/url?id=34229976.mp3"
-
 @interface CFPlayerController ()
 
 @property (nonatomic, strong) CFCDView *cdView;
@@ -49,6 +42,7 @@
     
     self.title = _model.songName;
     
+    //从列表点击进入时，判断是否为同一首歌
     if (![CFUSER.currentSong.songId isEqualToString:_model.songId]) {
         CFUSER.currentSong = _model;
         CFUSER.currentIndex = _songAtindex;
@@ -62,8 +56,10 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    //开启后台处理多媒体事件
+    //开启锁屏处理多媒体事件
     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+
+    [CF_NOTI_CENTER addObserver:self selector:@selector(remoteControl:) name:@"remoteControl" object:nil];
     
     UIImageView *bg_imageView = [self bg_imageView];
     [self.view addSubview:bg_imageView];
@@ -221,8 +217,9 @@
 
 #pragma mark - 锁屏控制，接受外部事件的处理
 
-- (void)remoteControlReceivedWithEvent: (UIEvent *) receivedEvent
+- (void)remoteControl:(NSNotification *)note
 {
+    UIEvent *receivedEvent = note.userInfo[@"event"];
     if (receivedEvent.type == UIEventTypeRemoteControl)
     {
         switch (receivedEvent.subtype)
@@ -261,7 +258,6 @@
         NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
         
         [dict setObject:CFUSER.currentSong.songName forKey:MPMediaItemPropertyTitle];
-
         
         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
         
