@@ -23,6 +23,7 @@
 		A2A2E1861FEE74C800CCFF93 /* CFRotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1851FEE74C800CCFF93 /* CFRotationView.m */; };
 		A2AEE7D31FF6436C00D58559 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1441FEE385400CCFF93 /* ViewController.m */; };
 		A2AEE7D61FF6493400D58559 /* UIImage+ImageHandle.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AEE7D51FF6493400D58559 /* UIImage+ImageHandle.m */; };
+		A2AEE7D91FF9070700D58559 /* CFSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A2AEE7D81FF9070700D58559 /* CFSliderView.m */; };
 		A2DEB01C1FF27D8C00946FF9 /* CFStreamerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DEB01B1FF27D8C00946FF9 /* CFStreamerModel.m */; };
 		A2DEB0201FF4F4DD00946FF9 /* CFUser.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DEB01F1FF4F4DD00946FF9 /* CFUser.m */; };
 		A2DEB0251FF5137A00946FF9 /* UIButton+BlockUI.m in Sources */ = {isa = PBXBuildFile; fileRef = A2DEB0241FF5137A00946FF9 /* UIButton+BlockUI.m */; };
@@ -78,6 +79,8 @@
 		A2A2E1871FEE764900CCFF93 /* CFHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFHeader.h; sourceTree = "<group>"; };
 		A2AEE7D41FF6493400D58559 /* UIImage+ImageHandle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageHandle.h"; sourceTree = "<group>"; };
 		A2AEE7D51FF6493400D58559 /* UIImage+ImageHandle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageHandle.m"; sourceTree = "<group>"; };
+		A2AEE7D71FF9070700D58559 /* CFSliderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFSliderView.h; sourceTree = "<group>"; };
+		A2AEE7D81FF9070700D58559 /* CFSliderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFSliderView.m; sourceTree = "<group>"; };
 		A2DEB01A1FF27D8C00946FF9 /* CFStreamerModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFStreamerModel.h; sourceTree = "<group>"; };
 		A2DEB01B1FF27D8C00946FF9 /* CFStreamerModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFStreamerModel.m; sourceTree = "<group>"; };
 		A2DEB01E1FF4F4DD00946FF9 /* CFUser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFUser.h; sourceTree = "<group>"; };
@@ -231,6 +234,8 @@
 				A2A2E1821FEE734100CCFF93 /* CFCDView.m */,
 				A2A2E1841FEE74C800CCFF93 /* CFRotationView.h */,
 				A2A2E1851FEE74C800CCFF93 /* CFRotationView.m */,
+				A2AEE7D71FF9070700D58559 /* CFSliderView.h */,
+				A2AEE7D81FF9070700D58559 /* CFSliderView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -453,6 +458,7 @@
 				A2A2E1451FEE385400CCFF93 /* ViewController.m in Sources */,
 				A2A2E17B1FEE5C5200CCFF93 /* CFBaseController.m in Sources */,
 				A2A2E1501FEE385400CCFF93 /* main.m in Sources */,
+				A2AEE7D91FF9070700D58559 /* CFSliderView.m in Sources */,
 				A2A2E1421FEE385400CCFF93 /* AppDelegate.m in Sources */,
 				A2A2E1831FEE734100CCFF93 /* CFCDView.m in Sources */,
 				A2DEB0251FF5137A00946FF9 /* UIButton+BlockUI.m in Sources */,

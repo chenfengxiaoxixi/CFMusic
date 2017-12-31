@@ -11,12 +11,17 @@
 #import <FSAudioStream.h>
 #import <MediaPlayer/MPMediaItem.h>
 #import <MediaPlayer/MPNowPlayingInfoCenter.h>
+#import "CFSliderView.h"
 
 @interface CFPlayerController ()
 
 @property (nonatomic, strong) CFCDView *cdView;
 // 对象
 @property (nonatomic, strong) FSAudioStream *audioStream;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, assign) NSInteger playTime;
+@property (nonatomic, assign) NSInteger totalTime;
+@property (nonatomic, strong) CFSliderView *sliderView;
 
 @end
 
@@ -61,9 +66,6 @@
 
     [CF_NOTI_CENTER addObserver:self selector:@selector(remoteControl:) name:@"remoteControl" object:nil];
     
-    UIImageView *bg_imageView = [self bg_imageView];
-    [self.view addSubview:bg_imageView];
-    
     [self buildUserInterface];
     
 }
@@ -86,6 +88,9 @@
 
 - (void)buildUserInterface
 {
+    UIImageView *bg_imageView = [self bg_imageView];
+    [self.view addSubview:bg_imageView];
+    
     weakSELF;
     
     //实例化
@@ -96,10 +101,13 @@
         [weakSelf.audioStream pause];
         
         if (is) {
+            [weakSelf.timer setFireDate:[NSDate distantPast]];// 计时器开始
+            
             NSLog(@"play");
         }
         else
         {
+            [weakSelf.timer setFireDate:[NSDate distantFuture]];// 计时器暂停
             NSLog(@"pause");
         }
         
@@ -116,25 +124,36 @@
     };
     [self.view addSubview:self.cdView];
     
+    _sliderView = [[CFSliderView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.cdView.frame) + 30, ScreenWidth - 40, 30)];
+    [self.view addSubview:_sliderView];
+    _sliderView.sliderValueChangeWithCallback = ^(UISlider *slider) {
+      
+        [weakSelf dragSliderEnd:slider];
+    };
+    
     UIButton *prevButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    prevButton.frame = CGRectMake(ScreenWidth/2 - 40 - 50, CGRectGetMaxY(self.cdView.frame) + 80, 40, 40);
+    prevButton.tag = 100;
+    prevButton.frame = CGRectMake(ScreenWidth/2 - 40 - 50, CGRectGetMaxY(_sliderView.frame) + 40, 40, 40);
     prevButton.tintColor = [UIColor darkGrayColor];
     [prevButton setImage:[UIImage imageNamed:@"prev"] forState:(UIControlStateNormal)];
     [prevButton cf_addEventHandler:^(UIButton *btn) {
         
-        [weakSelf.cdView scrollLeftWithPrev];
+        //延时点击，避免重复执行
+        [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(playAction:) object:btn];
+        [self performSelector:@selector(playAction:) withObject:btn afterDelay:0.5f];
         
     } forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:prevButton];
     
     UIButton *nextButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
-    nextButton.frame = CGRectMake(ScreenWidth/2 + 50, CGRectGetMaxY(self.cdView.frame) + 80, 40, 40);
+    nextButton.tag = 101;
+    nextButton.frame = CGRectMake(ScreenWidth/2 + 50, CGRectGetMaxY(_sliderView.frame) + 40, 40, 40);
     nextButton.tintColor = [UIColor darkGrayColor];
     [nextButton setImage:[UIImage imageNamed:@"next"] forState:(UIControlStateNormal)];
     [nextButton cf_addEventHandler:^(UIButton *btn) {
         
-        //下一首
-        [weakSelf.cdView scrollRightWIthNext];
+        [[self class] cancelPreviousPerformRequestsWithTarget:self selector:@selector(playAction:) object:btn];
+        [self performSelector:@selector(playAction:) withObject:btn afterDelay:0.5f];
   
     } forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:nextButton];
@@ -171,12 +190,86 @@
         _audioStream.url = url;
         [_audioStream play];
     }
+    
+    self.sliderView.nowTimeLabel.text = @"00:00";
+    self.sliderView.totalTimeLabel.text = @"00:00";
+    
+    if (!self.timer) {
+        //进度条
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playerProgress) userInfo:nil repeats:YES];
+    }
+    else
+    {
+        [self.timer setFireDate:[NSDate distantPast]];// 计时器开始
+    }
+}
+
+- (void)playerProgress
+{
+    FSStreamPosition position = self.audioStream.currentTimePlayed;
+    
+    self.playTime = round(position.playbackTimeInSeconds);//四舍五入整数值
+    
+    double minutes = floor(fmod(self.playTime/60.0,60.0));//返回不大于()中的最大整数值
+    double seconds = floor(fmod(self.playTime,60.0));
+    
+    self.sliderView.nowTimeLabel.text = [NSString stringWithFormat:@"%02.0f:%02.0f",minutes, seconds];
+    self.sliderView.slider.value = position.position;//播放进度
+
+    self.totalTime = position.playbackTimeInSeconds/position.position;
+    
+    if ([[NSString stringWithFormat:@"%ld",self.totalTime] isEqualToString:@"nan"]) {
+        self.sliderView.totalTimeLabel.text = @"00:00";
+    }else{
+        
+        double minutesElapsed1 = floor(fmod(self.totalTime/60.0,60.0));
+        double secondsElapsed1 = floor(fmod(self.totalTime,60.0));
+        self.sliderView.totalTimeLabel.text = [NSString stringWithFormat:@"%02.0f:%02.0f",minutesElapsed1, secondsElapsed1];
+    }
+
+    /// 更新锁屏播放进度====================
+    [self configNowPlayingInfoCenter];
+    
+}
+
+#pragma mark - Action
+
+- (void)dragSliderEnd:(UISlider *)slider{
+
+    if (slider.value == 1) {
+        //滑动到底时，播放下一曲
+        [self.cdView scrollRightWIthNext];
+    }
+    else
+    {
+        if (slider.value > 0)
+        {
+            //初始化一个FSStreamPosition结构体
+            FSStreamPosition pos;
+            //只对position赋值
+            pos.position = slider.value;
+            [self.audioStream seekToPosition:pos];// 到指定位置播放
+        }
+    }
+    
+}
+
+- (void)playAction:(UIButton *)sender
+{
+    if (sender.tag == 100) {
+        [self.cdView scrollLeftWithPrev];
+    }
+    else
+    {
+        [self.cdView scrollRightWIthNext];
+    }
 }
 
 - (void)next
 {
     CFUSER.currentIndex++;
     
+    [self.timer setFireDate:[NSDate distantFuture]];// 计时器暂停
     [self.audioStream stop];
     
     CFStreamerModel *model =  _dataSource[ CFUSER.currentIndex > [_dataSource count]-1 ? 0 : CFUSER.currentIndex];
@@ -193,6 +286,7 @@
 {
     CFUSER.currentIndex--;
     
+    [self.timer setFireDate:[NSDate distantFuture]];// 计时器暂停
     [self.audioStream stop];
     
     CFStreamerModel *model =  _dataSource[ CFUSER.currentIndex < 0 ? [_dataSource count]-1 : CFUSER.currentIndex];
@@ -259,7 +353,12 @@
         
         [dict setObject:CFUSER.currentSong.songName forKey:MPMediaItemPropertyTitle];
         
+        [dict setObject:@(self.playTime)forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+        //音乐的总时间
+        [dict setObject:@(self.totalTime)forKey:MPMediaItemPropertyPlaybackDuration];
+        
         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
+        
         
     }
 }
