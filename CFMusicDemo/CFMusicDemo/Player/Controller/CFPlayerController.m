@@ -227,7 +227,7 @@
         self.sliderView.totalTimeLabel.text = [NSString stringWithFormat:@"%02.0f:%02.0f",minutesElapsed1, secondsElapsed1];
     }
 
-    /// 更新锁屏播放进度====================
+    /// 更新锁屏播放进度
     [self configNowPlayingInfoCenter];
     
 }
