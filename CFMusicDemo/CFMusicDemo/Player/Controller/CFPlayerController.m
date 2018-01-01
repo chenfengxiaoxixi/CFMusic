@@ -181,8 +181,6 @@
             [weakSelf autoPlayNext];
         };
         
-        // 设置声音
-        [_audioStream setVolume:1];
         [_audioStream play];
     }
     else
@@ -217,14 +215,17 @@
     self.sliderView.slider.value = position.position;//播放进度
 
     self.totalTime = position.playbackTimeInSeconds/position.position;
-    
+    //判断分母为空时的情况
     if ([[NSString stringWithFormat:@"%ld",self.totalTime] isEqualToString:@"nan"]) {
+       
         self.sliderView.totalTimeLabel.text = @"00:00";
-    }else{
+    }
+    else
+    {
         
-        double minutesElapsed1 = floor(fmod(self.totalTime/60.0,60.0));
-        double secondsElapsed1 = floor(fmod(self.totalTime,60.0));
-        self.sliderView.totalTimeLabel.text = [NSString stringWithFormat:@"%02.0f:%02.0f",minutesElapsed1, secondsElapsed1];
+        double minutes2 = floor(fmod(self.totalTime/60.0,60.0));
+        double seconds2 = floor(fmod(self.totalTime,60.0));
+        self.sliderView.totalTimeLabel.text = [NSString stringWithFormat:@"%02.0f:%02.0f",minutes2, seconds2];
     }
 
     /// 更新锁屏播放进度
@@ -236,8 +237,8 @@
 
 - (void)dragSliderEnd:(UISlider *)slider{
 
+    //滑动到底时，播放下一曲
     if (slider.value == 1) {
-        //滑动到底时，播放下一曲
         [self.cdView scrollRightWIthNext];
     }
     else
