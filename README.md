@@ -7,5 +7,5 @@
 ![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1225.PNG) 
 ![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1226.PNG)
 
-# 效果演示
+# GIF效果演示
 ![gif](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/Untitled.gif)
