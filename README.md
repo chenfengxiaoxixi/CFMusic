@@ -3,3 +3,5 @@
 
 # 效果图
 ![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1223.PNG)
+![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1224.PNG)
+![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1225.PNG)
