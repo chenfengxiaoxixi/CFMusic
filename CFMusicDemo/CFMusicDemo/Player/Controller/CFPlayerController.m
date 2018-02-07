@@ -29,16 +29,13 @@
 
 + (instancetype)sharePlayerController
 {
-    @synchronized(self)
-    {
-        static CFPlayerController *_instance = nil;
-        static dispatch_once_t onceToken;
-        dispatch_once(&onceToken, ^{
-            _instance = [[self alloc] init];
-        });
-        
-        return _instance;
-    }
+    static CFPlayerController *_instance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init];
+    });
+    
+    return _instance;
 }
 
 - (void)viewWillAppear:(BOOL)animated
