@@ -8,14 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		085E05FDF0FB5CCA0D73F3F2 /* libPods-CFMusicDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0E66B120C230BC095B70CB /* libPods-CFMusicDemo.a */; };
+		0C3DDFB52226622F008A1681 /* DisplayLyricView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3DDFB42226622F008A1681 /* DisplayLyricView.m */; };
+		0C61D08A22268C89009639F4 /* ssm.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0C61D08922268C89009639F4 /* ssm.txt */; };
+		0C61D08D222695EE009639F4 /* LyricCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C61D08C222695EE009639F4 /* LyricCell.m */; };
+		0C86C0592227787D00D39E48 /* LyricsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C86C0582227787D00D39E48 /* LyricsManager.m */; };
 		A2A2E1421FEE385400CCFF93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1411FEE385400CCFF93 /* AppDelegate.m */; };
 		A2A2E1451FEE385400CCFF93 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1441FEE385400CCFF93 /* ViewController.m */; };
 		A2A2E1481FEE385400CCFF93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2A2E1461FEE385400CCFF93 /* Main.storyboard */; };
 		A2A2E14A1FEE385400CCFF93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A2A2E1491FEE385400CCFF93 /* Assets.xcassets */; };
 		A2A2E14D1FEE385400CCFF93 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2A2E14B1FEE385400CCFF93 /* LaunchScreen.storyboard */; };
 		A2A2E1501FEE385400CCFF93 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E14F1FEE385400CCFF93 /* main.m */; };
-		A2A2E15A1FEE385400CCFF93 /* CFMusicDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1591FEE385400CCFF93 /* CFMusicDemoTests.m */; };
-		A2A2E1651FEE385400CCFF93 /* CFMusicDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1641FEE385400CCFF93 /* CFMusicDemoUITests.m */; };
 		A2A2E1751FEE58B700CCFF93 /* UIView+Frame.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1731FEE58B700CCFF93 /* UIView+Frame.m */; };
 		A2A2E17B1FEE5C5200CCFF93 /* CFBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E17A1FEE5C5200CCFF93 /* CFBaseController.m */; };
 		A2A2E17E1FEE5CF400CCFF93 /* CFPlayerController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E17D1FEE5CF400CCFF93 /* CFPlayerController.m */; };
@@ -47,9 +49,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0C3DDFB32226622F008A1681 /* DisplayLyricView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayLyricView.h; sourceTree = "<group>"; };
+		0C3DDFB42226622F008A1681 /* DisplayLyricView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayLyricView.m; sourceTree = "<group>"; };
+		0C61D08922268C89009639F4 /* ssm.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssm.txt; sourceTree = "<group>"; };
+		0C61D08B222695EE009639F4 /* LyricCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricCell.h; sourceTree = "<group>"; };
+		0C61D08C222695EE009639F4 /* LyricCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LyricCell.m; sourceTree = "<group>"; };
+		0C86C0572227787D00D39E48 /* LyricsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsManager.h; sourceTree = "<group>"; };
+		0C86C0582227787D00D39E48 /* LyricsManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LyricsManager.m; sourceTree = "<group>"; };
 		356ED1AB760E59682EC9774F /* Pods-CFMusicDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CFMusicDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		55A3A83A9E38D1388A5E8100 /* Pods-CFMusicDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CFMusicDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo.release.xcconfig"; sourceTree = "<group>"; };
-		A242EC3D2024864000504EB4 /* CFMusicDemoTests copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CFMusicDemoTests copy-Info.plist"; path = "/Users/cf/Desktop/gitRepository/CFMusic/CFMusicDemo/CFMusicDemoTests copy-Info.plist"; sourceTree = "<absolute>"; };
 		A2A2E13D1FEE385400CCFF93 /* CFMusicDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFMusicDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2A2E1401FEE385400CCFF93 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A2A2E1411FEE385400CCFF93 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -61,11 +69,7 @@
 		A2A2E14E1FEE385400CCFF93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2A2E14F1FEE385400CCFF93 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		A2A2E1551FEE385400CCFF93 /* CFMusicDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CFMusicDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2A2E1591FEE385400CCFF93 /* CFMusicDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFMusicDemoTests.m; sourceTree = "<group>"; };
-		A2A2E15B1FEE385400CCFF93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2A2E1601FEE385400CCFF93 /* CFMusicDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CFMusicDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A2A2E1641FEE385400CCFF93 /* CFMusicDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CFMusicDemoUITests.m; sourceTree = "<group>"; };
-		A2A2E1661FEE385400CCFF93 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A2A2E1731FEE58B700CCFF93 /* UIView+Frame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Frame.m"; sourceTree = "<group>"; };
 		A2A2E1741FEE58B700CCFF93 /* UIView+Frame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Frame.h"; sourceTree = "<group>"; };
 		A2A2E1791FEE5C5200CCFF93 /* CFBaseController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CFBaseController.h; sourceTree = "<group>"; };
@@ -117,6 +121,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0C3DDFB022265F4A008A1681 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				0C61D08922268C89009639F4 /* ssm.txt */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		0C86C0562227782600D39E48 /* ToolManager */ = {
+			isa = PBXGroup;
+			children = (
+				0C86C0572227787D00D39E48 /* LyricsManager.h */,
+				0C86C0582227787D00D39E48 /* LyricsManager.m */,
+			);
+			path = ToolManager;
+			sourceTree = "<group>";
+		};
 		94F5E6C5E9AF959C39682D36 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -129,12 +150,9 @@
 			isa = PBXGroup;
 			children = (
 				A2A2E13F1FEE385400CCFF93 /* CFMusicDemo */,
-				A2A2E1581FEE385400CCFF93 /* CFMusicDemoTests */,
-				A2A2E1631FEE385400CCFF93 /* CFMusicDemoUITests */,
 				A2A2E13E1FEE385400CCFF93 /* Products */,
 				BB81C6DC50C04BB83497D494 /* Pods */,
 				94F5E6C5E9AF959C39682D36 /* Frameworks */,
-				A242EC3D2024864000504EB4 /* CFMusicDemoTests copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +169,8 @@
 		A2A2E13F1FEE385400CCFF93 /* CFMusicDemo */ = {
 			isa = PBXGroup;
 			children = (
+				0C86C0562227782600D39E48 /* ToolManager */,
+				0C3DDFB022265F4A008A1681 /* src */,
 				A2DEB01D1FF4F44800946FF9 /* User */,
 				A2A2E1721FEE58B700CCFF93 /* Category */,
 				A2A2E1781FEE5C3C00CCFF93 /* Base */,
@@ -169,24 +189,6 @@
 				A2A2E14F1FEE385400CCFF93 /* main.m */,
 			);
 			path = CFMusicDemo;
-			sourceTree = "<group>";
-		};
-		A2A2E1581FEE385400CCFF93 /* CFMusicDemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				A2A2E1591FEE385400CCFF93 /* CFMusicDemoTests.m */,
-				A2A2E15B1FEE385400CCFF93 /* Info.plist */,
-			);
-			path = CFMusicDemoTests;
-			sourceTree = "<group>";
-		};
-		A2A2E1631FEE385400CCFF93 /* CFMusicDemoUITests */ = {
-			isa = PBXGroup;
-			children = (
-				A2A2E1641FEE385400CCFF93 /* CFMusicDemoUITests.m */,
-				A2A2E1661FEE385400CCFF93 /* Info.plist */,
-			);
-			path = CFMusicDemoUITests;
 			sourceTree = "<group>";
 		};
 		A2A2E1721FEE58B700CCFF93 /* Category */ = {
@@ -238,6 +240,10 @@
 				A2A2E1851FEE74C800CCFF93 /* CFRotationView.m */,
 				A2AEE7D71FF9070700D58559 /* CFSliderView.h */,
 				A2AEE7D81FF9070700D58559 /* CFSliderView.m */,
+				0C3DDFB32226622F008A1681 /* DisplayLyricView.h */,
+				0C3DDFB42226622F008A1681 /* DisplayLyricView.m */,
+				0C61D08B222695EE009639F4 /* LyricCell.h */,
+				0C61D08C222695EE009639F4 /* LyricCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -378,6 +384,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C61D08A22268C89009639F4 /* ssm.txt in Resources */,
 				A2A2E14D1FEE385400CCFF93 /* LaunchScreen.storyboard in Resources */,
 				A2A2E14A1FEE385400CCFF93 /* Assets.xcassets in Resources */,
 				A2A2E1481FEE385400CCFF93 /* Main.storyboard in Resources */,
@@ -464,7 +471,10 @@
 				A2A2E1421FEE385400CCFF93 /* AppDelegate.m in Sources */,
 				A2A2E1831FEE734100CCFF93 /* CFCDView.m in Sources */,
 				A2DEB0251FF5137A00946FF9 /* UIButton+BlockUI.m in Sources */,
+				0C61D08D222695EE009639F4 /* LyricCell.m in Sources */,
 				A2AEE7D61FF6493400D58559 /* UIImage+ImageHandle.m in Sources */,
+				0C3DDFB52226622F008A1681 /* DisplayLyricView.m in Sources */,
+				0C86C0592227787D00D39E48 /* LyricsManager.m in Sources */,
 				A2A2E17E1FEE5CF400CCFF93 /* CFPlayerController.m in Sources */,
 				A2A2E1861FEE74C800CCFF93 /* CFRotationView.m in Sources */,
 				A2DEB01C1FF27D8C00946FF9 /* CFStreamerModel.m in Sources */,
@@ -477,7 +487,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2AEE7D31FF6436C00D58559 /* ViewController.m in Sources */,
-				A2A2E15A1FEE385400CCFF93 /* CFMusicDemoTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +494,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A2A2E1651FEE385400CCFF93 /* CFMusicDemoUITests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -639,7 +647,7 @@
 				INFOPLIST_FILE = CFMusicDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chenfeng.CFMusicDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenfeng.CFMusicDemoTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -656,7 +664,7 @@
 				INFOPLIST_FILE = CFMusicDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.chenfeng.CFMusicDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.chenfeng.CFMusicDemoTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

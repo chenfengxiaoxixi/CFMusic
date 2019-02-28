@@ -19,7 +19,7 @@
         self.url = dic[@"url"];
         self.songId = dic[@"id"];
         self.imageString = dic[@"image"];
-        
+        self.lyric = dic[@"lyric"];
     }
     return self;
 }

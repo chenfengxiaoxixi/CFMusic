@@ -13,7 +13,7 @@
 
 @property (nonatomic, strong) NSString *userName;
 @property (nonatomic, assign) NSInteger currentIndex;
-@property (nonatomic, strong) CFStreamerModel *currentSong;
+@property (nonatomic, strong) CFStreamerModel *currentSongModel;
 
 + (instancetype)shareInstance;
 

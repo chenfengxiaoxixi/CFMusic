@@ -11,17 +11,28 @@
 #import <FSAudioStream.h>
 #import <MediaPlayer/MPMediaItem.h>
 #import <MediaPlayer/MPNowPlayingInfoCenter.h>
+#import <MediaPlayer/MPRemoteCommandCenter.h>
+#import <MediaPlayer/MPRemoteCommand.h>
+#import <MediaPlayer/MPRemoteCommandEvent.h>
 #import "CFSliderView.h"
+#import "DisplayLyricView.h"
+#import "LyricsManager.h"
+
 
 @interface CFPlayerController ()
 
 @property (nonatomic, strong) CFCDView *cdView;
+@property (nonatomic, strong) DisplayLyricView *lyricView;
 // 对象
 @property (nonatomic, strong) FSAudioStream *audioStream;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) NSInteger playTime;
 @property (nonatomic, assign) NSInteger totalTime;
 @property (nonatomic, strong) CFSliderView *sliderView;
+
+@property (nonatomic, strong) LyricsManager *lyricsManager;
+
+@property (nonatomic, assign) BOOL isDisplyCDView;
 
 @end
 
@@ -45,13 +56,11 @@
     self.title = _model.songName;
     
     //从列表点击进入时，判断是否为同一首歌
-    if (![CFUSER.currentSong.songId isEqualToString:_model.songId]) {
-        CFUSER.currentSong = _model;
-        CFUSER.currentIndex = _songAtindex;
+    if (![CFUSER.currentSongModel.songId isEqualToString:_model.songId]) {
+        CFUSER.currentSongModel = _model;
         [self.cdView reloadNew];
         [self updateInfo];
     }
-    
 }
 
 - (void)viewDidLoad {
@@ -59,18 +68,41 @@
     // Do any additional setup after loading the view.
     
     //开启锁屏处理多媒体事件
-    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-
-    [CF_NOTI_CENTER addObserver:self selector:@selector(remoteControl:) name:@"remoteControl" object:nil];
+    [self configRemoteControlEvents];
+    
+    _isDisplyCDView = YES;
     
     [self buildUserInterface];
-    
+    [self buildDisplaylyricView];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+- (void)configRemoteControlEvents
+{
+//    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+    
+    if (@available(iOS 9.1, *)) {
+        
+        //播放，暂停
+        [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(remoteControlActionWithPlayPause:)];
+        //下一首
+        [commandCenter.nextTrackCommand addTarget:self action:@selector(remoteControlActionWithNext:)];
+        //上一首
+        [commandCenter.previousTrackCommand addTarget:self action:@selector(remoteControlActionWithPre:)];
+        //进度条拖动
+        [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(remoteControlActionSeekToPosition:)];
+    } else {
+        // Fallback on earlier versions
+    }
+    
+}
+
+#pragma mark - UI
 
 - (UIImageView *)bg_imageView
 {
@@ -121,6 +153,9 @@
     };
     [self.view addSubview:self.cdView];
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleDisplay)];
+    [_cdView addGestureRecognizer:tap];
+    
     _sliderView = [[CFSliderView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.cdView.frame) + 30, ScreenWidth - 40, 30)];
     [self.view addSubview:_sliderView];
     _sliderView.sliderValueChangeWithCallback = ^(UISlider *slider) {
@@ -157,11 +192,40 @@
     
 }
 
+//初始化歌词显示
+- (void)buildDisplaylyricView
+{
+    if (_lyricsManager == nil) {
+        //歌词管理
+        _lyricsManager = [[LyricsManager alloc] init];
+        [_lyricsManager analysisOfLyrics:CFUSER.currentSongModel.lyric];
+        
+        //显示歌词
+        _lyricView = [[DisplayLyricView alloc] initWithFrame:CGRectMake(0,64 + 30, ScreenWidth,ROTATION_WIDTH + 80)];
+        _lyricView.alpha = 0;
+        _lyricView.textArray = _lyricsManager.textArray;
+        [self.view addSubview:_lyricView];
+        [_lyricView reloadTableView];
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleDisplay)];
+        [_lyricView addGestureRecognizer:tap];
+        
+    }
+    else
+    {
+        [_lyricsManager clearLyricsInfo];
+        [_lyricsManager analysisOfLyrics:CFUSER.currentSongModel.lyric];
+        _lyricView.textArray = _lyricsManager.textArray;
+        [_lyricView reloadTableView];
+    }
+}
+
+//初始化播放器
 - (void)buildStreamer
 {
     weakSELF;
     // 网络文件
-    NSURL *url = [NSURL URLWithString:CFUSER.currentSong.url];
+    NSURL *url = [NSURL URLWithString:CFUSER.currentSongModel.url];
     
     if (!_audioStream) {
         
@@ -178,20 +242,30 @@
             [weakSelf autoPlayNext];
         };
         
+        [_audioStream preload];
         [_audioStream play];
     }
     else
     {
-        _audioStream.url = url;
-        [_audioStream play];
+        if (!self.audioStream.isPlaying) {
+            [_timer setFireDate:[NSDate distantFuture]];// 计时器暂停
+            [_audioStream stop];
+            [_audioStream playFromURL:url];
+        }
+        else
+        {
+            _audioStream.url = url;
+            [_audioStream preload];
+            [_audioStream play];
+        }
     }
     
-    self.sliderView.nowTimeLabel.text = @"00:00";
-    self.sliderView.totalTimeLabel.text = @"00:00";
+    self.sliderView.nowTimeLabel.text = @"--:--";
+    self.sliderView.totalTimeLabel.text = @"--:--";
     
     if (!self.timer) {
         //进度条
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(playerProgress) userInfo:nil repeats:YES];
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(playerProgress) userInfo:nil repeats:YES];
     }
     else
     {
@@ -199,6 +273,7 @@
     }
 }
 
+//进度控制
 - (void)playerProgress
 {
     FSStreamPosition position = self.audioStream.currentTimePlayed;
@@ -213,19 +288,24 @@
 
     self.totalTime = position.playbackTimeInSeconds/position.position;
     //判断分母为空时的情况
-    if ([[NSString stringWithFormat:@"%ld",self.totalTime] isEqualToString:@"nan"]) {
+    if ([[NSString stringWithFormat:@"%f",position.position] isEqualToString:@"0.000000"]) {
        
-        self.sliderView.totalTimeLabel.text = @"00:00";
+        self.sliderView.nowTimeLabel.text = @"--:--";
+        self.sliderView.totalTimeLabel.text = @"--:--";
     }
     else
     {
-        
         double minutes2 = floor(fmod(self.totalTime/60.0,60.0));
         double seconds2 = floor(fmod(self.totalTime,60.0));
         self.sliderView.totalTimeLabel.text = [NSString stringWithFormat:@"%02.0f:%02.0f",minutes2, seconds2];
     }
 
-    /// 更新锁屏播放进度
+    //更新正在播放选中歌词
+    _lyricView.currentRow = [_lyricsManager updateSelectedIndexLyricWithTime:position.playbackTimeInSeconds];
+    
+    [_lyricView reloadTableViewWithCurrentRow];
+    
+    // 更新锁屏播放进度
     [self configNowPlayingInfoCenter];
     
 }
@@ -269,14 +349,14 @@
     
     [self.timer setFireDate:[NSDate distantFuture]];// 计时器暂停
     [self.audioStream stop];
-    
-    CFStreamerModel *model =  _dataSource[ CFUSER.currentIndex > [_dataSource count]-1 ? 0 : CFUSER.currentIndex];
-    
+
+    CFStreamerModel *model =  _dataSource[CFUSER.currentIndex > [_dataSource count]-1 ? 0 : CFUSER.currentIndex];
+
     if (CFUSER.currentIndex > [_dataSource count]-1) {
         CFUSER.currentIndex = 0;
     }
-    
-    CFUSER.currentSong = model;
+
+    CFUSER.currentSongModel = model;
     [self updateInfo];
 }
 
@@ -293,53 +373,82 @@
         CFUSER.currentIndex = [_dataSource count] - 1;
     }
     
-    CFUSER.currentSong = model;
+    CFUSER.currentSongModel = model;
     [self updateInfo];
 }
 
 - (void)updateInfo
 {
-    self.title = CFUSER.currentSong.songName;
+    self.title = CFUSER.currentSongModel.songName;
+
     [self buildStreamer];
-    
+
+    [self buildDisplaylyricView];
+
     [self configNowPlayingInfoCenter];
     _reloadInfo();
-    self.cdView.center_rotationView.CDimageView.image = IMAGE_WITH_NAME(CFUSER.currentSong.imageString);
+
+    self.cdView.center_rotationView.CDimageView.image = IMAGE_WITH_NAME(CFUSER.currentSongModel.imageString);
 }
+
+- (void)toggleDisplay
+{
+    if (_isDisplyCDView) {
+        
+        [UIView animateWithDuration:0.3 animations:^{
+           
+            _lyricView.alpha = 1.0;
+            _cdView.alpha = 0;
+        } completion:^(BOOL finished) {
+            
+            _isDisplyCDView = NO;
+        }];
+
+    }
+    else
+    {
+        [UIView animateWithDuration:0.3 animations:^{
+            
+            _cdView.alpha = 1.0;
+            _lyricView.alpha = 0;
+        } completion:^(BOOL finished) {
+            
+            _isDisplyCDView = YES;
+        }];
+    }
+    
+}
+
 
 #pragma mark - 锁屏控制，接受外部事件的处理
 
-- (void)remoteControl:(NSNotification *)note
+- (void)remoteControlActionSeekToPosition:(MPChangePlaybackPositionCommandEvent *)event
 {
-    UIEvent *receivedEvent = note.userInfo[@"event"];
-    if (receivedEvent.type == UIEventTypeRemoteControl)
-    {
-        switch (receivedEvent.subtype)
-        {
-            case UIEventSubtypeRemoteControlTogglePlayPause:
-                        [self.audioStream stop];
-            break;
-            case UIEventSubtypeRemoteControlPreviousTrack:
-
-                        [self.cdView scrollLeftWithPrev];
-            break;
-            case UIEventSubtypeRemoteControlNextTrack:
-                        [self.cdView scrollRightWIthNext];
-            break;
-                
-            case UIEventSubtypeRemoteControlPlay:
-                        [self.cdView playOrPause];
-            break;
-                
-            case UIEventSubtypeRemoteControlPause:
-                        //暂停歌曲时，动画也要暂停
-                        [self.cdView playOrPause];
-            break;
-            
-            default:
-            break;
-        }
+    CGFloat seekTime = event.positionTime;
+    
+    CGFloat value = seekTime/self.totalTime;
+    FSStreamPosition pos;
+    pos.position = value;
+    [self.audioStream seekToPosition:pos];// 到指定位置播放
+    
+    if (value == 1) {
+        [self autoPlayNext];
     }
+}
+
+- (void)remoteControlActionWithPlayPause:(MPRemoteCommandEvent *)event
+{
+    [self.cdView playOrPause];
+}
+
+- (void)remoteControlActionWithNext:(MPRemoteCommandEvent *)event
+{
+    [self.cdView scrollRightWIthNext];
+}
+
+- (void)remoteControlActionWithPre:(MPRemoteCommandEvent *)event
+{
+    [self.cdView scrollLeftWithPrev];
 }
 
 //锁屏显示信息
@@ -349,20 +458,23 @@
         
         NSMutableDictionary * dict = [[NSMutableDictionary alloc] init];
         
-        [dict setObject:CFUSER.currentSong.songName forKey:MPMediaItemPropertyTitle];
+        [dict setObject:CFUSER.currentSongModel.songName forKey:MPMediaItemPropertyTitle];
         
-        [dict setObject:@(self.playTime)forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
+        [dict setObject:@(self.playTime) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
         //音乐的总时间
-        [dict setObject:@(self.totalTime)forKey:MPMediaItemPropertyPlaybackDuration];
-        
+        [dict setObject:@(self.totalTime) forKey:MPMediaItemPropertyPlaybackDuration];
+        //当前歌词添加在副标题处
+        if (_lyricView.currentRow <= _lyricView.textArray.count - 1) {
+            [dict setObject:_lyricView.textArray[_lyricView.currentRow] forKey:MPMediaItemPropertyAlbumTitle];
+        }
+
         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
-        
         
     }
 }
 
 //后台播放控制
--(void)autoPlayNext{
+- (void)autoPlayNext{
     
     //添加后台播放任务
     UIBackgroundTaskIdentifier bgTask = 0;

@@ -60,9 +60,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-- (void)remoteControlReceivedWithEvent: (UIEvent *) receivedEvent
-{
-    [CF_NOTI_CENTER postNotificationName:@"remoteControl" object:nil userInfo:@{@"event":receivedEvent}];
-}
+//- (void)remoteControlReceivedWithEvent: (UIEvent *) receivedEvent
+//{
+//    [CF_NOTI_CENTER postNotificationName:@"remoteControl" object:nil userInfo:@{@"event":receivedEvent}];
+//}
 
 @end

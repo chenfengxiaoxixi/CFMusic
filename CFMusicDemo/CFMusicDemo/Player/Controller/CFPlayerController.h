@@ -12,9 +12,7 @@
 
 // 数据源
 @property (nonatomic, strong) NSMutableArray *dataSource;
-@property (nonatomic, assign) BOOL isChangeSong;
 @property (nonatomic, strong) CFStreamerModel *model;
-@property (nonatomic, assign) NSInteger songAtindex;
 
 @property (nonatomic, strong) void (^reloadInfo)(void);
 

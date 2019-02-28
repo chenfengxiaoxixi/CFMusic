@@ -57,17 +57,30 @@
     // Dispose of any resources that can be recreated.
 }
 
+
+- (NSString *)getLrcPath{
+    return [[NSBundle mainBundle] pathForResource:@"ssm" ofType:@"txt"];
+}
+
 - (void)configDataSource
 {
     // 数据源
     _list = [[NSMutableArray alloc]init];
     
-    NSArray *arr = @[@{@"url":MUSIC1,@"songName":@"少司命 - 客官请进",@"id":@"1",@"image":@"cdImage"},
-                     @{@"url":MUSIC2,@"songName":@"Mike Zhou - The Dawn",@"id":@"2",@"image":@"cdImage2"},
-                     @{@"url":MUSIC3,@"songName":@"Matteo - Panama",@"id":@"3",@"image":@"cdImage3"}];
+    NSString *path = [NSBundle.mainBundle pathForResource:@"ssm" ofType:@"txt"];
+    //注意编码格式
+    NSStringEncoding enc = CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000);
+    //文件内容转换成字符串类型
+    NSString* str = [[NSString alloc] initWithContentsOfFile:path encoding:enc error:nil];
+    NSLog(@"%@",str);
+    
+    
+    NSArray *arr = @[@{@"url":MUSIC1,@"songName":@"少司命 - 客官请进",@"id":@"1",@"image":@"cdImage",@"lyric":str},
+                     @{@"url":MUSIC2,@"songName":@"Mike Zhou - The Dawn",@"id":@"2",@"image":@"cdImage2",@"lyric":@"无歌词"},
+                     @{@"url":MUSIC3,@"songName":@"Matteo - Panama",@"id":@"3",@"image":@"cdImage3",@"lyric":@"无歌词"}];
     
     for (NSDictionary *dic in arr) {
-        CFStreamerModel *model = [[CFStreamerModel alloc]initWithDic:dic];
+        CFStreamerModel *model = [[CFStreamerModel alloc] initWithDic:dic];
         [_list addObject:model];
     }
     
@@ -128,7 +141,7 @@
     
     cell.textLabel.text = model.songName;
     
-    if ([CFUSER.currentSong.songId isEqualToString:model.songId]) {
+    if ([CFUSER.currentSongModel.songId isEqualToString:model.songId]) {
         
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selected"]];
         imageView.frame = CGRectMake(0, 0, 25, 25);
@@ -150,11 +163,12 @@
     
     CFStreamerModel*model =_list[indexPath.row];
     
+    CFUSER.currentIndex = indexPath.row;
+    
     //创建单例播放器
     CFPlayerController *vc = [CFPlayerController sharePlayerController];
     vc.model = model;
     vc.dataSource = _list;
-    vc.songAtindex = indexPath.row;
     [self.navigationController pushViewController:vc animated:vc];
     
     vc.reloadInfo = ^{
