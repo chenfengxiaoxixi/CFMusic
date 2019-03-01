@@ -74,7 +74,7 @@
     NSString* str = [[NSString alloc] initWithContentsOfFile:path encoding:enc error:nil];
     NSLog(@"%@",str);
     
-    
+    //歌曲信息
     NSArray *arr = @[@{@"url":MUSIC1,@"songName":@"少司命 - 客官请进",@"id":@"1",@"image":@"cdImage",@"lyric":str},
                      @{@"url":MUSIC2,@"songName":@"Mike Zhou - The Dawn",@"id":@"2",@"image":@"cdImage2",@"lyric":@"无歌词"},
                      @{@"url":MUSIC3,@"songName":@"Matteo - Panama",@"id":@"3",@"image":@"cdImage3",@"lyric":@"无歌词"}];

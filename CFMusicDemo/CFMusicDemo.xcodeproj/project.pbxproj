@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		085E05FDF0FB5CCA0D73F3F2 /* libPods-CFMusicDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0E66B120C230BC095B70CB /* libPods-CFMusicDemo.a */; };
-		0C3DDFB52226622F008A1681 /* DisplayLyricView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C3DDFB42226622F008A1681 /* DisplayLyricView.m */; };
 		0C61D08A22268C89009639F4 /* ssm.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0C61D08922268C89009639F4 /* ssm.txt */; };
-		0C61D08D222695EE009639F4 /* LyricCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C61D08C222695EE009639F4 /* LyricCell.m */; };
-		0C86C0592227787D00D39E48 /* LyricsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C86C0582227787D00D39E48 /* LyricsManager.m */; };
+		0CC47ED92228F81C00C79518 /* LyricsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC47ED62228F81C00C79518 /* LyricsManager.m */; };
+		0CC47EDA2228F81C00C79518 /* LyricCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC47ED72228F81C00C79518 /* LyricCell.m */; };
+		0CC47EDB2228F81C00C79518 /* DisplayLyricView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CC47ED82228F81C00C79518 /* DisplayLyricView.m */; };
 		A2A2E1421FEE385400CCFF93 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1411FEE385400CCFF93 /* AppDelegate.m */; };
 		A2A2E1451FEE385400CCFF93 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A2A2E1441FEE385400CCFF93 /* ViewController.m */; };
 		A2A2E1481FEE385400CCFF93 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A2A2E1461FEE385400CCFF93 /* Main.storyboard */; };
@@ -49,13 +49,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0C3DDFB32226622F008A1681 /* DisplayLyricView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayLyricView.h; sourceTree = "<group>"; };
-		0C3DDFB42226622F008A1681 /* DisplayLyricView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DisplayLyricView.m; sourceTree = "<group>"; };
 		0C61D08922268C89009639F4 /* ssm.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ssm.txt; sourceTree = "<group>"; };
-		0C61D08B222695EE009639F4 /* LyricCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricCell.h; sourceTree = "<group>"; };
-		0C61D08C222695EE009639F4 /* LyricCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LyricCell.m; sourceTree = "<group>"; };
-		0C86C0572227787D00D39E48 /* LyricsManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LyricsManager.h; sourceTree = "<group>"; };
-		0C86C0582227787D00D39E48 /* LyricsManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LyricsManager.m; sourceTree = "<group>"; };
+		0CC47ED32228F81C00C79518 /* LyricsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricsManager.h; sourceTree = "<group>"; };
+		0CC47ED42228F81C00C79518 /* LyricCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricCell.h; sourceTree = "<group>"; };
+		0CC47ED52228F81C00C79518 /* DisplayLyricView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DisplayLyricView.h; sourceTree = "<group>"; };
+		0CC47ED62228F81C00C79518 /* LyricsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricsManager.m; sourceTree = "<group>"; };
+		0CC47ED72228F81C00C79518 /* LyricCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricCell.m; sourceTree = "<group>"; };
+		0CC47ED82228F81C00C79518 /* DisplayLyricView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayLyricView.m; sourceTree = "<group>"; };
 		356ED1AB760E59682EC9774F /* Pods-CFMusicDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CFMusicDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		55A3A83A9E38D1388A5E8100 /* Pods-CFMusicDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CFMusicDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-CFMusicDemo/Pods-CFMusicDemo.release.xcconfig"; sourceTree = "<group>"; };
 		A2A2E13D1FEE385400CCFF93 /* CFMusicDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CFMusicDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,10 +132,22 @@
 		0C86C0562227782600D39E48 /* ToolManager */ = {
 			isa = PBXGroup;
 			children = (
-				0C86C0572227787D00D39E48 /* LyricsManager.h */,
-				0C86C0582227787D00D39E48 /* LyricsManager.m */,
+				0CC47ED22228F81C00C79518 /* LyricsManager */,
 			);
 			path = ToolManager;
+			sourceTree = "<group>";
+		};
+		0CC47ED22228F81C00C79518 /* LyricsManager */ = {
+			isa = PBXGroup;
+			children = (
+				0CC47ED32228F81C00C79518 /* LyricsManager.h */,
+				0CC47ED62228F81C00C79518 /* LyricsManager.m */,
+				0CC47ED42228F81C00C79518 /* LyricCell.h */,
+				0CC47ED72228F81C00C79518 /* LyricCell.m */,
+				0CC47ED52228F81C00C79518 /* DisplayLyricView.h */,
+				0CC47ED82228F81C00C79518 /* DisplayLyricView.m */,
+			);
+			path = LyricsManager;
 			sourceTree = "<group>";
 		};
 		94F5E6C5E9AF959C39682D36 /* Frameworks */ = {
@@ -240,10 +252,6 @@
 				A2A2E1851FEE74C800CCFF93 /* CFRotationView.m */,
 				A2AEE7D71FF9070700D58559 /* CFSliderView.h */,
 				A2AEE7D81FF9070700D58559 /* CFSliderView.m */,
-				0C3DDFB32226622F008A1681 /* DisplayLyricView.h */,
-				0C3DDFB42226622F008A1681 /* DisplayLyricView.m */,
-				0C61D08B222695EE009639F4 /* LyricCell.h */,
-				0C61D08C222695EE009639F4 /* LyricCell.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -464,17 +472,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				A2A2E1751FEE58B700CCFF93 /* UIView+Frame.m in Sources */,
+				0CC47EDB2228F81C00C79518 /* DisplayLyricView.m in Sources */,
+				0CC47ED92228F81C00C79518 /* LyricsManager.m in Sources */,
 				A2A2E1451FEE385400CCFF93 /* ViewController.m in Sources */,
 				A2A2E17B1FEE5C5200CCFF93 /* CFBaseController.m in Sources */,
 				A2A2E1501FEE385400CCFF93 /* main.m in Sources */,
 				A2AEE7D91FF9070700D58559 /* CFSliderView.m in Sources */,
 				A2A2E1421FEE385400CCFF93 /* AppDelegate.m in Sources */,
 				A2A2E1831FEE734100CCFF93 /* CFCDView.m in Sources */,
+				0CC47EDA2228F81C00C79518 /* LyricCell.m in Sources */,
 				A2DEB0251FF5137A00946FF9 /* UIButton+BlockUI.m in Sources */,
-				0C61D08D222695EE009639F4 /* LyricCell.m in Sources */,
 				A2AEE7D61FF6493400D58559 /* UIImage+ImageHandle.m in Sources */,
-				0C3DDFB52226622F008A1681 /* DisplayLyricView.m in Sources */,
-				0C86C0592227787D00D39E48 /* LyricsManager.m in Sources */,
 				A2A2E17E1FEE5CF400CCFF93 /* CFPlayerController.m in Sources */,
 				A2A2E1861FEE74C800CCFF93 /* CFRotationView.m in Sources */,
 				A2DEB01C1FF27D8C00946FF9 /* CFStreamerModel.m in Sources */,

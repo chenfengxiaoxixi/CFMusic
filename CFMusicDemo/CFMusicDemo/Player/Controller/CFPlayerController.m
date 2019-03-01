@@ -22,7 +22,6 @@
 @interface CFPlayerController ()
 
 @property (nonatomic, strong) CFCDView *cdView;
-@property (nonatomic, strong) DisplayLyricView *lyricView;
 // 对象
 @property (nonatomic, strong) FSAudioStream *audioStream;
 @property (nonatomic, strong) NSTimer *timer;
@@ -84,6 +83,7 @@
 - (void)configRemoteControlEvents
 {
 //    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    //初始化远程控制中心
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     
     if (@available(iOS 9.1, *)) {
@@ -122,7 +122,7 @@
     
     weakSELF;
     
-    //实例化
+    //实例化唱片
     self.cdView = [[CFCDView alloc] initWithFrame:CGRectMake(0,64 + 30, ScreenWidth,ROTATION_WIDTH + 80)];
     self.cdView.backgroundColor = [UIColor clearColor];
     self.cdView.isPlayer = ^(BOOL is){
@@ -156,6 +156,7 @@
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleDisplay)];
     [_cdView addGestureRecognizer:tap];
     
+    //进度条
     _sliderView = [[CFSliderView alloc] initWithFrame:CGRectMake(20, CGRectGetMaxY(self.cdView.frame) + 30, ScreenWidth - 40, 30)];
     [self.view addSubview:_sliderView];
     _sliderView.sliderValueChangeWithCallback = ^(UISlider *slider) {
@@ -163,6 +164,7 @@
         [weakSelf dragSliderEnd:slider];
     };
     
+    //上一首
     UIButton *prevButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     prevButton.tag = 100;
     prevButton.frame = CGRectMake(ScreenWidth/2 - 40 - 50, CGRectGetMaxY(_sliderView.frame) + 40, 40, 40);
@@ -177,6 +179,7 @@
     } forControlEvents:(UIControlEventTouchUpInside)];
     [self.view addSubview:prevButton];
     
+    //下一首
     UIButton *nextButton = [UIButton buttonWithType:(UIButtonTypeSystem)];
     nextButton.tag = 101;
     nextButton.frame = CGRectMake(ScreenWidth/2 + 50, CGRectGetMaxY(_sliderView.frame) + 40, 40, 40);
@@ -192,31 +195,28 @@
     
 }
 
-//初始化歌词显示
+//初始化歌词管理
 - (void)buildDisplaylyricView
 {
     if (_lyricsManager == nil) {
         //歌词管理
         _lyricsManager = [[LyricsManager alloc] init];
-        [_lyricsManager analysisOfLyrics:CFUSER.currentSongModel.lyric];
         
-        //显示歌词
-        _lyricView = [[DisplayLyricView alloc] initWithFrame:CGRectMake(0,64 + 30, ScreenWidth,ROTATION_WIDTH + 80)];
-        _lyricView.alpha = 0;
-        _lyricView.textArray = _lyricsManager.textArray;
-        [self.view addSubview:_lyricView];
-        [_lyricView reloadTableView];
+        CGRect frame = CGRectMake(0,64 + 30, ScreenWidth,ROTATION_WIDTH + 80);
+        [self.view addSubview:[_lyricsManager configLyricViewWithFrame:frame]];
+        
+        [_lyricsManager analysisOfLyrics:CFUSER.currentSongModel.lyric];
+        [_lyricsManager reloadLyricView];
         
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleDisplay)];
-        [_lyricView addGestureRecognizer:tap];
+        [_lyricsManager.lyricView addGestureRecognizer:tap];
         
     }
     else
     {
         [_lyricsManager clearLyricsInfo];
         [_lyricsManager analysisOfLyrics:CFUSER.currentSongModel.lyric];
-        _lyricView.textArray = _lyricsManager.textArray;
-        [_lyricView reloadTableView];
+        [_lyricsManager reloadLyricView];
     }
 }
 
@@ -301,9 +301,8 @@
     }
 
     //更新正在播放选中歌词
-    _lyricView.currentRow = [_lyricsManager updateSelectedIndexLyricWithTime:position.playbackTimeInSeconds];
-    
-    [_lyricView reloadTableViewWithCurrentRow];
+    _lyricsManager.currentRow = [_lyricsManager updateSelectedIndexLyricWithTime:position.playbackTimeInSeconds];
+    [_lyricsManager reloadLyricViewWithCurrentRow];
     
     // 更新锁屏播放进度
     [self configNowPlayingInfoCenter];
@@ -397,7 +396,7 @@
         
         [UIView animateWithDuration:0.3 animations:^{
            
-            _lyricView.alpha = 1.0;
+            _lyricsManager.lyricView.alpha = 1.0;
             _cdView.alpha = 0;
         } completion:^(BOOL finished) {
             
@@ -410,7 +409,7 @@
         [UIView animateWithDuration:0.3 animations:^{
             
             _cdView.alpha = 1.0;
-            _lyricView.alpha = 0;
+            _lyricsManager.lyricView.alpha = 0;
         } completion:^(BOOL finished) {
             
             _isDisplyCDView = YES;
@@ -463,9 +462,9 @@
         [dict setObject:@(self.playTime) forKey:MPNowPlayingInfoPropertyElapsedPlaybackTime];
         //音乐的总时间
         [dict setObject:@(self.totalTime) forKey:MPMediaItemPropertyPlaybackDuration];
-        //当前歌词添加在副标题处
-        if (_lyricView.currentRow <= _lyricView.textArray.count - 1) {
-            [dict setObject:_lyricView.textArray[_lyricView.currentRow] forKey:MPMediaItemPropertyAlbumTitle];
+        //当前歌词添加在副标题处,ios12显示格式区别于低版本的ios
+        if (_lyricsManager.currentRow <= _lyricsManager.textArray.count - 1) {
+            [dict setObject:_lyricsManager.textArray[_lyricsManager.currentRow] forKey:MPMediaItemPropertyAlbumTitle];
         }
 
         [[MPNowPlayingInfoCenter defaultCenter] setNowPlayingInfo:dict];
