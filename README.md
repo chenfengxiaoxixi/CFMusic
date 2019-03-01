@@ -1,11 +1,19 @@
 # CFMusic
-实现了的一个简单的流媒体播放器。功能包括流媒体播放，上一曲，下一曲，暂停，进度条拖拽等。还实现了一些动画效果。现在还在开发，用的是FreeStreamer库。
+使用FreeStreamer流媒体库写的一个音乐播放器，实现的功能有歌词显示，锁屏控制，上一曲，下一曲，暂停，进度条拖拽播放，滑动切换等。目前还会不定时更新一些新功能上来，欢迎交流。
 
 # 效果图
-![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1223.PNG) 
-![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1224.PNG) 
-![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1225.PNG) 
-![image](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/IMG_1226.PNG)
+总览
 
-# GIF效果演示
-![gif](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/Untitled.gif)
+![gif图1](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/总览.gif)
+
+其他
+
+![gif图2](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/歌词同步.gif)
+![gif图3](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/歌曲切换.gif)
+![gif图4](https://github.com/chenfengxiaoxixi/CFMusic/blob/master/image/锁屏演示.gif)
+
+
+# 博客
+**详情请见我简书博客**
+[点击进入](https://www.jianshu.com/p/f219ffdb439a)
+
