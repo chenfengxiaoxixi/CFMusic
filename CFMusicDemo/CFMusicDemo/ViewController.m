@@ -16,8 +16,8 @@
 #define MUSIC1 @"http://music.163.com/song/media/outer/url?id=444444053.mp3"
 //Mike Zhou - The Dawn
 #define MUSIC2 @"http://music.163.com/song/media/outer/url?id=476592630.mp3"
-//Matteo - Panama
-#define MUSIC3 @"http://music.163.com/song/media/outer/url?id=34229976.mp3"
+//大鱼 - 周深
+#define MUSIC3 @"http://music.163.com/song/media/outer/url?id=413812448.mp3"
 
 @interface ViewController ()<UITableViewDelegate,UITableViewDataSource>
 
@@ -77,7 +77,7 @@
     //歌曲信息
     NSArray *arr = @[@{@"url":MUSIC1,@"songName":@"少司命 - 客官请进",@"id":@"1",@"image":@"cdImage",@"lyric":str},
                      @{@"url":MUSIC2,@"songName":@"Mike Zhou - The Dawn",@"id":@"2",@"image":@"cdImage2",@"lyric":@"无歌词"},
-                     @{@"url":MUSIC3,@"songName":@"Matteo - Panama",@"id":@"3",@"image":@"cdImage3",@"lyric":@"无歌词"}];
+                     @{@"url":MUSIC3,@"songName":@"大鱼",@"id":@"3",@"image":@"cdImage3",@"lyric":@"无歌词"}];
     
     for (NSDictionary *dic in arr) {
         CFStreamerModel *model = [[CFStreamerModel alloc] initWithDic:dic];

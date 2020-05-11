@@ -67,6 +67,9 @@
     // Do any additional setup after loading the view.
     
     //开启锁屏处理多媒体事件
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    //开启锁屏处理多媒体事件
     [self configRemoteControlEvents];
     
     _isDisplyCDView = YES;
@@ -86,15 +89,14 @@
     //初始化远程控制中心
     MPRemoteCommandCenter *commandCenter = [MPRemoteCommandCenter sharedCommandCenter];
     
+    //播放，暂停
+           [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(remoteControlActionWithPlayPause:)];
+           //下一首
+           [commandCenter.nextTrackCommand addTarget:self action:@selector(remoteControlActionWithNext:)];
+           //上一首
+           [commandCenter.previousTrackCommand addTarget:self action:@selector(remoteControlActionWithPre:)];
+           //进度条拖动
     if (@available(iOS 9.1, *)) {
-        
-        //播放，暂停
-        [commandCenter.togglePlayPauseCommand addTarget:self action:@selector(remoteControlActionWithPlayPause:)];
-        //下一首
-        [commandCenter.nextTrackCommand addTarget:self action:@selector(remoteControlActionWithNext:)];
-        //上一首
-        [commandCenter.previousTrackCommand addTarget:self action:@selector(remoteControlActionWithPre:)];
-        //进度条拖动
         [commandCenter.changePlaybackPositionCommand addTarget:self action:@selector(remoteControlActionSeekToPosition:)];
     } else {
         // Fallback on earlier versions
@@ -421,7 +423,7 @@
 
 #pragma mark - 锁屏控制，接受外部事件的处理
 
-- (void)remoteControlActionSeekToPosition:(MPChangePlaybackPositionCommandEvent *)event
+- (MPRemoteCommandHandlerStatus)remoteControlActionSeekToPosition:(MPChangePlaybackPositionCommandEvent *)event
 {
     CGFloat seekTime = event.positionTime;
     
@@ -433,21 +435,25 @@
     if (value == 1) {
         [self autoPlayNext];
     }
+    return MPRemoteCommandHandlerStatusSuccess;
 }
 
-- (void)remoteControlActionWithPlayPause:(MPRemoteCommandEvent *)event
+- (MPRemoteCommandHandlerStatus)remoteControlActionWithPlayPause:(MPRemoteCommandEvent *)event
 {
     [self.cdView playOrPause];
+    return MPRemoteCommandHandlerStatusSuccess;
 }
 
-- (void)remoteControlActionWithNext:(MPRemoteCommandEvent *)event
+- (MPRemoteCommandHandlerStatus)remoteControlActionWithNext:(MPRemoteCommandEvent *)event
 {
     [self.cdView scrollRightWIthNext];
+    return MPRemoteCommandHandlerStatusSuccess;
 }
 
-- (void)remoteControlActionWithPre:(MPRemoteCommandEvent *)event
+- (MPRemoteCommandHandlerStatus)remoteControlActionWithPre:(MPRemoteCommandEvent *)event
 {
     [self.cdView scrollLeftWithPrev];
+    return MPRemoteCommandHandlerStatusSuccess;
 }
 
 //锁屏显示信息
